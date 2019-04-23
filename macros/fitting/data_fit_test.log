@@ -1,0 +1,502 @@
+using pre-histogrammed data in pickle files
+clusters_15922.hist: histograms with counts
+  low: 2636125
+  med1: 2522708
+  med2: 2523742
+  high: 2463707
+
+clusters_15923.hist: histograms with counts
+  low: 2636125
+  med1: 2522708
+  med2: 2523742
+  high: 2463707
+
+clusters_15924.hist: histograms with counts
+  low: 5279889
+  med1: 5055281
+  med2: 5053185
+  high: 4933761
+
+clusters_15925.hist: histograms with counts
+  low: 7857642
+  med1: 7519633
+  med2: 7519371
+  high: 7341462
+
+clusters_15926.hist: histograms with counts
+  low: 10395938
+  med1: 9948800
+  med2: 9949485
+  high: 9714393
+
+clusters_15927.hist: histograms with counts
+  low: 11734766
+  med1: 11230173
+  med2: 11231026
+  high: 10965302
+
+clusters_15928.hist: histograms with counts
+  low: 13087635
+  med1: 12525195
+  med2: 12526465
+  high: 12229455
+
+clusters_noalldata.hist: histograms with counts
+  low: 14336087
+  med1: 13720644
+  med2: 13722793
+  high: 13396749
+
+making plots...
+generating U & V graphs...
+plotting U & V graphs...
+composing ratio graph...
+clipping ratio graph domain (if needed)...
+estimating parameters for fit starting point...
+performing five-parameter fit...
+...done.
+Five-parameter fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+           N0:   1.311e+10 +-  2.136e+06  (initial: 1.217e+10)
+            A:  -0.4694 +-  0.0001892  (initial: 0.1   )
+            r:  -21.29 +-  4.633  (initial: 0     )
+        phi_a:   5.232 +-  0.0007588  (initial: 0     )
+        tau_a:   6.435e+04 +-  9.495  (initial: 6.431e+04)
+  DoF:  4292 bins - 5 parameters = 4287
+  chi^2:  5107.352765
+  reduced chi^2:  1.191358
+  P:      0
+  covariance:
+    4.56e+12       -7.16    -5.84e+04        13.1    -8.65e+06    
+       -7.16    3.58e-08    -3.94e-06     9.1e-10    2.39e-05    
+    -5.84e+04    -3.94e-06        21.5     -0.0029       0.205    
+        13.1     9.1e-10     -0.0029    5.76e-07    -4.55e-05    
+    -8.65e+06    2.39e-05       0.205    -4.55e-05        90.2    
+--------------------------------------------------------------------------
+performing exponential fit...
+...done.
+Exponential fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+           N0:   3.868e+09 +-  5.857e+05  (initial: 3.043e+09)
+        tau_a:   6.435e+04 +-  8.845  (initial: 6.431e+04)
+  DoF:  4292 bins - 2 parameters = 4290
+  chi^2:  5260.222902
+  reduced chi^2:  1.226159
+  P:      0
+  covariance:
+    3.43e+11    -2.19e+06    
+    -2.19e+06        78.2    
+--------------------------------------------------------------------------
+performing sinusoidal fit...
+...done.
+Ratio fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+            A:  -0.4695 +-  0.0001683  (initial: 0.4744)
+            r:    1131 +-  4.118  (initial: 0     )
+        phi_a:  -1.052 +-  0.0006748  (initial: 0     )
+  DoF:  4292 bins - 3 parameters = 4289
+  chi^2:  4741.358373
+  reduced chi^2:  1.105469
+  P: 1.126e-06
+  covariance:
+    2.83e-08    -3.1e-06    7.18e-10    
+    -3.1e-06          17     -0.0023    
+    7.18e-10     -0.0023    4.55e-07    
+--------------------------------------------------------------------------
+saving data and run settings to save_fits/savedata.pkl...
+
+using pre-histogrammed data in pickle files
+Traceback (most recent call last):
+  File "./data_fit_test.py", line 136, in <module>
+    'ERROR: Fits output directory "%s" already exists!'%(save_fits_dir,)
+RuntimeError: ERROR: Fits output directory "save_fits" already exists!
+
+using pre-histogrammed data in pickle files
+clusters_15922.hist: histograms with counts
+  low: 2636125
+  med1: 2522708
+  med2: 2523742
+  high: 2463707
+
+clusters_15923.hist: histograms with counts
+  low: 2636125
+  med1: 2522708
+  med2: 2523742
+  high: 2463707
+
+clusters_15924.hist: histograms with counts
+  low: 5279889
+  med1: 5055281
+  med2: 5053185
+  high: 4933761
+
+clusters_15925.hist: histograms with counts
+  low: 7857642
+  med1: 7519633
+  med2: 7519371
+  high: 7341462
+
+clusters_15926.hist: histograms with counts
+  low: 10395938
+  med1: 9948800
+  med2: 9949485
+  high: 9714393
+
+clusters_15927.hist: histograms with counts
+  low: 11734766
+  med1: 11230173
+  med2: 11231026
+  high: 10965302
+
+clusters_15928.hist: histograms with counts
+  low: 13087635
+  med1: 12525195
+  med2: 12526465
+  high: 12229455
+
+clusters_noalldata.hist: histograms with counts
+  low: 14336087
+  med1: 13720644
+  med2: 13722793
+  high: 13396749
+
+making plots...
+generating U & V graphs...
+plotting U & V graphs...
+composing ratio graph...
+clipping ratio graph domain (if needed)...
+estimating parameters for fit starting point...
+performing five-parameter fit...
+...done.
+Five-parameter fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+           N0:   1.311e+10 +-  2.136e+06  (initial: 1.217e+10)
+            A:  -0.4694 +-  0.0001892  (initial: 0.1   )
+            r:  -21.29 +-  4.633  (initial: 0     )
+        phi_a:   5.232 +-  0.0007588  (initial: 0     )
+        tau_a:   6.435e+04 +-  9.495  (initial: 6.431e+04)
+  DoF:  4292 bins - 5 parameters = 4287
+  chi^2:  5107.352765
+  reduced chi^2:  1.191358
+  P:      0
+  covariance:
+    4.56e+12       -7.16    -5.84e+04        13.1    -8.65e+06    
+       -7.16    3.58e-08    -3.94e-06     9.1e-10    2.39e-05    
+    -5.84e+04    -3.94e-06        21.5     -0.0029       0.205    
+        13.1     9.1e-10     -0.0029    5.76e-07    -4.55e-05    
+    -8.65e+06    2.39e-05       0.205    -4.55e-05        90.2    
+--------------------------------------------------------------------------
+performing exponential fit...
+...done.
+Exponential fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+           N0:   3.868e+09 +-  5.857e+05  (initial: 3.043e+09)
+        tau_a:   6.435e+04 +-  8.845  (initial: 6.431e+04)
+  DoF:  4292 bins - 2 parameters = 4290
+  chi^2:  5260.222902
+  reduced chi^2:  1.226159
+  P:      0
+  covariance:
+    3.43e+11    -2.19e+06    
+    -2.19e+06        78.2    
+--------------------------------------------------------------------------
+performing sinusoidal fit...
+...done.
+Ratio fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+            A:  -0.4695 +-  0.0001683  (initial: 0.4744)
+            r:    1131 +-  4.118  (initial: 0     )
+        phi_a:  -1.052 +-  0.0006748  (initial: 0     )
+  DoF:  4292 bins - 3 parameters = 4289
+  chi^2:  4741.358373
+  reduced chi^2:  1.105469
+  P: 1.126e-06
+  covariance:
+    2.83e-08    -3.1e-06    7.18e-10    
+    -3.1e-06          17     -0.0023    
+    7.18e-10     -0.0023    4.55e-07    
+--------------------------------------------------------------------------
+saving data and run settings to save_fits/savedata.pkl...
+
+using pre-histogrammed data in pickle files
+Traceback (most recent call last):
+  File "./data_fit_test.py", line 138, in <module>
+    os.mkdir(save_fits_dir)
+OSError: [Errno 17] File exists: 'save_fits'
+
+using pre-histogrammed data in pickle files
+clusters_15922.hist: histograms with counts
+  low: 2636125
+  med1: 2522708
+  med2: 2523742
+  high: 2463707
+
+clusters_15923.hist: histograms with counts
+  low: 2636125
+  med1: 2522708
+  med2: 2523742
+  high: 2463707
+
+clusters_15924.hist: histograms with counts
+  low: 5279889
+  med1: 5055281
+  med2: 5053185
+  high: 4933761
+
+clusters_15925.hist: histograms with counts
+  low: 7857642
+  med1: 7519633
+  med2: 7519371
+  high: 7341462
+
+clusters_15926.hist: histograms with counts
+  low: 10395938
+  med1: 9948800
+  med2: 9949485
+  high: 9714393
+
+clusters_15927.hist: histograms with counts
+  low: 11734766
+  med1: 11230173
+  med2: 11231026
+  high: 10965302
+
+clusters_15928.hist: histograms with counts
+  low: 13087635
+  med1: 12525195
+  med2: 12526465
+  high: 12229455
+
+clusters_noalldata.hist: histograms with counts
+  low: 14336087
+  med1: 13720644
+  med2: 13722793
+  high: 13396749
+
+making plots...
+generating U & V graphs...
+plotting U & V graphs...
+composing ratio graph...
+clipping ratio graph domain (if needed)...
+estimating parameters for fit starting point...
+performing five-parameter fit...
+...done.
+Five-parameter fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+           N0:   1.311e+10 +-  2.136e+06  (initial: 1.217e+10)
+            A:  -0.4694 +-  0.0001892  (initial: 0.1   )
+            r:  -21.29 +-  4.633  (initial: 0     )
+        phi_a:   5.232 +-  0.0007588  (initial: 0     )
+        tau_a:   6.435e+04 +-  9.495  (initial: 6.431e+04)
+  DoF:  4292 bins - 5 parameters = 4287
+  chi^2:  5107.352765
+  reduced chi^2:  1.191358
+  P:      0
+  covariance:
+    4.56e+12       -7.16    -5.84e+04        13.1    -8.65e+06    
+       -7.16    3.58e-08    -3.94e-06     9.1e-10    2.39e-05    
+    -5.84e+04    -3.94e-06        21.5     -0.0029       0.205    
+        13.1     9.1e-10     -0.0029    5.76e-07    -4.55e-05    
+    -8.65e+06    2.39e-05       0.205    -4.55e-05        90.2    
+--------------------------------------------------------------------------
+performing exponential fit...
+...done.
+Exponential fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+           N0:   3.868e+09 +-  5.857e+05  (initial: 3.043e+09)
+        tau_a:   6.435e+04 +-  8.845  (initial: 6.431e+04)
+  DoF:  4292 bins - 2 parameters = 4290
+  chi^2:  5260.222902
+  reduced chi^2:  1.226159
+  P:      0
+  covariance:
+    3.43e+11    -2.19e+06    
+    -2.19e+06        78.2    
+--------------------------------------------------------------------------
+performing sinusoidal fit...
+...done.
+Ratio fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+            A:  -0.4695 +-  0.0001683  (initial: 0.4744)
+            r:    1131 +-  4.118  (initial: 0     )
+        phi_a:  -1.052 +-  0.0006748  (initial: 0     )
+  DoF:  4292 bins - 3 parameters = 4289
+  chi^2:  4741.358373
+  reduced chi^2:  1.105469
+  P: 1.126e-06
+  covariance:
+    2.83e-08    -3.1e-06    7.18e-10    
+    -3.1e-06          17     -0.0023    
+    7.18e-10     -0.0023    4.55e-07    
+--------------------------------------------------------------------------
+saving data and run settings to save_fits/savedata.pkl...
+
+using pickle file(s)
+Traceback (most recent call last):
+  File "../fitting/pyfitter/data_fit_test.py", line 138, in <module>
+    os.mkdir(save_fits_dir)
+OSError: [Errno 17] File exists: 'save_fits'
+
+using pickle file(s)
+/Users/ekargian/Documents/g-2/Wa_analysis/FNAL_R-method/gm2ilratio/toymc/save_fits/fitresults_1.pkl: 9 fit records
+performing 4-way binning...
+Traceback (most recent call last):
+  File "data_fit_test.py", line 417, in <module>
+    tlist = fitrecords['time']
+KeyError: 'time'
+
+using pre-histogrammed data in pickle files
+clusters_15922.hist: histograms with counts
+  low: 2636125
+  med1: 2522708
+  med2: 2523742
+  high: 2463707
+
+clusters_15923.hist: histograms with counts
+  low: 2636125
+  med1: 2522708
+  med2: 2523742
+  high: 2463707
+
+clusters_15924.hist: histograms with counts
+  low: 5279889
+  med1: 5055281
+  med2: 5053185
+  high: 4933761
+
+clusters_15925.hist: histograms with counts
+  low: 7857642
+  med1: 7519633
+  med2: 7519371
+  high: 7341462
+
+clusters_15926.hist: histograms with counts
+  low: 10395938
+  med1: 9948800
+  med2: 9949485
+  high: 9714393
+
+clusters_15927.hist: histograms with counts
+  low: 11734766
+  med1: 11230173
+  med2: 11231026
+  high: 10965302
+
+clusters_15928.hist: histograms with counts
+  low: 13087635
+  med1: 12525195
+  med2: 12526465
+  high: 12229455
+
+clusters_noalldata.hist: histograms with counts
+  low: 14336087
+  med1: 13720644
+  med2: 13722793
+  high: 13396749
+
+making plots...
+generating U & V graphs...
+plotting U & V graphs...
+composing ratio graph...
+clipping ratio graph domain (if needed)...
+estimating parameters for fit starting point...
+performing five-parameter fit...
+...done.
+Five-parameter fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+           N0:   1.311e+10 +-  2.136e+06  (initial: 1.217e+10)
+            A:  -0.4694 +-  0.0001892  (initial: 0.1   )
+            r:  -21.29 +-  4.633  (initial: 0     )
+        phi_a:   5.232 +-  0.0007588  (initial: 0     )
+        tau_a:   6.435e+04 +-  9.495  (initial: 6.431e+04)
+  DoF:  4292 bins - 5 parameters = 4287
+  chi^2:  5107.352765
+  reduced chi^2:  1.191358
+  P:      0
+  covariance:
+    4.56e+12       -7.16    -5.84e+04        13.1    -8.65e+06    
+       -7.16    3.58e-08    -3.94e-06     9.1e-10    2.39e-05    
+    -5.84e+04    -3.94e-06        21.5     -0.0029       0.205    
+        13.1     9.1e-10     -0.0029    5.76e-07    -4.55e-05    
+    -8.65e+06    2.39e-05       0.205    -4.55e-05        90.2    
+--------------------------------------------------------------------------
+performing exponential fit...
+...done.
+Exponential fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+           N0:   3.868e+09 +-  5.857e+05  (initial: 3.043e+09)
+        tau_a:   6.435e+04 +-  8.845  (initial: 6.431e+04)
+  DoF:  4292 bins - 2 parameters = 4290
+  chi^2:  5260.222902
+  reduced chi^2:  1.226159
+  P:      0
+  covariance:
+    3.43e+11    -2.19e+06    
+    -2.19e+06        78.2    
+--------------------------------------------------------------------------
+performing sinusoidal fit...
+...done.
+Ratio fit:
+--------------------------------------------------------------------------
+  Fit status: 1 (success)
+  Both actual and predicted relative reductions in the sum of squares
+    are at most 0.000000
+  parameters:
+            A:  -0.4695 +-  0.0001683  (initial: 0.4744)
+            r:    1131 +-  4.118  (initial: 0     )
+        phi_a:  -1.052 +-  0.0006748  (initial: 0     )
+  DoF:  4292 bins - 3 parameters = 4289
+  chi^2:  4741.358373
+  reduced chi^2:  1.105469
+  P: 1.126e-06
+  covariance:
+    2.83e-08    -3.1e-06    7.18e-10    
+    -3.1e-06          17     -0.0023    
+    7.18e-10     -0.0023    4.55e-07    
+--------------------------------------------------------------------------
+saving data and run settings to save_fits/savedata.pkl...
+

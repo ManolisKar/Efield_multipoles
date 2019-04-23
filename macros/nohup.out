@@ -1,0 +1,80 @@
+/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: overflow encountered in cosh
+  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
+/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: overflow encountered in double_scalars
+  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
+/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: invalid value encountered in double_scalars
+  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
+
+
+Initial parameters ::
+[[[  5.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]]
+
+ [[  1.00000000e+01   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]]
+
+ [[  1.00000000e-03   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]]
+
+ [[  1.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]]]
+normalized residual ::
+[ -1.28453136e-02  -1.36364549e-02  -1.44570394e-02 ...,   2.31013114e+03
+   4.79749185e+03   6.37835007e+03]
+Traceback (most recent call last):
+  File "multipoles.py", line 118, in <module>
+    args=(coordinates, V, err_V, n_order, m_order))
+  File "/usr/local/lib/python2.7/site-packages/scipy/optimize/minpack.py", line 377, in leastsq
+    shape, dtype = _check_func('leastsq', 'func', func, x0, args, n)
+  File "/usr/local/lib/python2.7/site-packages/scipy/optimize/minpack.py", line 26, in _check_func
+    res = atleast_1d(thefunc(*((x0[:numinputs],) + args)))
+  File "multipoles.py", line 60, in residual
+    * np.cos(n*(eta[i]-eta_nm[n][m])) * np.cos(m*(phi[i]-phi_nm[n][m]))
+IndexError: invalid index to scalar variable.
+/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: overflow encountered in cosh
+  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
+/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: overflow encountered in double_scalars
+  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
+/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: invalid value encountered in double_scalars
+  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
+
+
+Initial parameters ::
+[[[  5.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]]
+
+ [[  1.00000000e+01   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]]
+
+ [[  1.00000000e-03   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]]
+
+ [[  1.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]
+  [  0.00000000e+00   0.00000000e+00   0.00000000e+00]]]
+normalized residual ::
+[ -1.28453136e-02  -1.36364549e-02  -1.44570394e-02 ...,   2.31013114e+03
+   4.79749185e+03   6.37835007e+03]
+Traceback (most recent call last):
+  File "multipoles.py", line 116, in <module>
+    result = leastsq(residual, pars, args=(coordinates, V, err_V, n_order, m_order))
+  File "/usr/local/lib/python2.7/site-packages/scipy/optimize/minpack.py", line 377, in leastsq
+    shape, dtype = _check_func('leastsq', 'func', func, x0, args, n)
+  File "/usr/local/lib/python2.7/site-packages/scipy/optimize/minpack.py", line 26, in _check_func
+    res = atleast_1d(thefunc(*((x0[:numinputs],) + args)))
+  File "multipoles.py", line 59, in residual
+    model_V[i] += (A_nm[n][m]*legendre_Q_toroidal(m,n,mu[i]) + B_nm[n][m]*legendre_P_toroidal(m,n,mu[i])) * np.cos(n*(eta[i]-eta_nm[n][m])) * np.cos(m*(phi[i]-phi_nm[n][m]))
+IndexError: invalid index to scalar variable.
+/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: overflow encountered in cosh
+  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
+/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: overflow encountered in double_scalars
+  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
+/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: invalid value encountered in double_scalars
+  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
