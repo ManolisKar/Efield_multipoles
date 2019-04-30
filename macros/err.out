@@ -1,6 +1,0 @@
-/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: overflow encountered in cosh
-  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
-/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: overflow encountered in double_scalars
-  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
-/Users/ekargian/Documents/g-2/Magnets/ElectrostaticQuads/E-field/Multipole_expansion/macros/math_functions.py:68: RuntimeWarning: invalid value encountered in double_scalars
-  integrand  = np.cosh(m*t) / (np.cosh(ksi)+np.cosh(t)*np.sinh(ksi))**(n+0.5)
