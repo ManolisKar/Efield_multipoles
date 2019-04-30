@@ -71,7 +71,11 @@ def residual(pars, coordinates, V, err_V, n_order, m_order):
 # (this file has been parsed to only include measurements within a 9.5 cm diameter circle)
 #data = np.loadtxt('short_quad_ideal.dat', comments='!')
 #data = np.loadtxt('short_quad_ideal_Vgt10.dat', comments='!')
-fstem='test3000'
+if len(sys.argv)>1:# passed 1st arg for file stem
+    fstem=str(sys.argv[1])
+else:
+    fstem='test3000'
+print 'Processing file '+fstem+'.dat'
 data = np.loadtxt(fstem+'.dat', comments='!')
 x=data[:,0]
 y=data[:,1]
