@@ -3,6 +3,9 @@ import numpy as np
 import scipy
 from math_functions import *
 import matplotlib.pyplot as plt
+import sys
+
+iter_count=0
 
 __doc__ = '''Fit data of potential from an OPERA map file
 to a function of multipoles in toroidal coordinates.
@@ -48,10 +51,17 @@ def model_potential(pars, coordinates, n_order, m_order):
     return model_V 
 
 def residual(pars, coordinates, V, err_V, n_order, m_order):
+    global iter_count
+
     model_V = model_potential(pars, coordinates, n_order, m_order)
     norm_residuals = (V - model_V)/err_V
     sum_residuals = sum(np.power(norm_residuals,2.))
+
+    iter_count += 1
+    print 'Iteration #', iter_count
+    print 'pars ::\n', pars
     print 'normalized residual sum = ', sum_residuals
+    sys.stdout.flush()
 
     return norm_residuals
 
@@ -60,7 +70,9 @@ def residual(pars, coordinates, V, err_V, n_order, m_order):
 # Open OPERA map file and read in data
 # (this file has been parsed to only include measurements within a 9.5 cm diameter circle)
 #data = np.loadtxt('short_quad_ideal.dat', comments='!')
-data = np.loadtxt('short_quad_ideal_Vgt10.dat', comments='!')
+#data = np.loadtxt('short_quad_ideal_Vgt10.dat', comments='!')
+fstem='test3000'
+data = np.loadtxt(fstem+'.dat', comments='!')
 x=data[:,0]
 y=data[:,1]
 z=data[:,2]
@@ -83,13 +95,23 @@ a=5.756
 
 err_V=1 ### To do: realistic error estimate for each V value ###
 
-n_order=5
-m_order=5
+n_order=10
+m_order=10
 pars = np.zeros(4*( sum(range(n_order+1)) + m_order + 1 ))
 # I believe pars is required to be 1-D array of parameters to be optimized.
 # pars[0+4*n*m] are the A_nm, pars[1+4*n*m] are the B_nm, 
 # pars[2+4*n*m] are the eta_nm, pars[3+4*n*m] are the phi_nm.
-# Set some initial values, up to appropriate order:
+# Get some initial values from file, up to appropriate order:
+starting_pars = np.loadtxt('pars_'+fstem+'.dat', comments='!')
+for n in range(n_order+1):
+    for m in range(n+1): # for now m goes up to n, or up to m_order
+        if m>m_order: continue
+        nm_id = 4*( sum(range(n+1)) + m ) #n-m position in the parameter array
+        for ipar in range(4):
+            if nm_id+ipar>=len(starting_pars): break
+            pars[nm_id+ipar] = starting_pars[nm_id+ipar]
+
+'''
 n=0
 m=0
 nm_id = 4*( sum(range(n+1)) + m )
@@ -109,12 +131,18 @@ pars[0+nm_id] = 2
 pars[1+nm_id] = 2
 pars[2+nm_id] = 0.2
 pars[3+nm_id] = 2
+'''
 print '\n\nInitial parameters ::\n', pars
 
 # Calculate and minimize the residuals
 residual(pars,coordinates,V,err_V,n_order,m_order)
 result_pars, flag = scipy.optimize.leastsq(residual, pars, args=(coordinates, V, err_V, n_order, m_order) )#,ftol=1e-13,xtol=1e-10)
 print ('Result flag = %d\n Fit parameters ::\n'%flag), result_pars
+
+# Output parameters to file
+pars_file = open('pars_'+fstem+'.dat')
+for i in range(len(pars)):
+    pars_file.write(pars[i])
 
 
 # Plot results

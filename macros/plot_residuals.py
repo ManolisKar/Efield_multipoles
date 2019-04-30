@@ -78,7 +78,7 @@ coordinates = data[:,9:12]
 a=5.756 
 
 # Now read in the result for the fit parameters
-pars = np.loadtxt('pars_' + fstem + '.out', comments='!')
+pars = np.loadtxt(fstem + '.out', comments='!')
 nm_order,temp=pars.shape
 for i in range(20):
     if sum(range(i+1))+i+2>nm_order:
