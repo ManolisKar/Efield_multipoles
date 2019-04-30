@@ -11,6 +11,8 @@ r=data[:,3]
 # phi=data[:,4] -- unnecessary because not in [0,2pi] - get from y/x instead
 phi = np.arctan2(y,x) # this phi will be within [-pi/2,pi/2] -- will be fixed below
 
+V=data[:,8]
+
 # distance of each "pole" in the bipolar coordinate system from origin.
 # defined in cm, same as coordinates in file.
 a=5.756 
@@ -40,10 +42,10 @@ for i in range(len(eta)):
         phi[i] = 2*np.pi + phi[i]
     
 # Open output file
-f= open("short_quad_ideal.dat","w+")
+f= open("short_quad_ideal_Vgt10.dat","w+")
 
 for i in range(len(r)):
-    if r[i]>=706.45 and r[i]<=715.95:
+    if r[i]>=706.45 and r[i]<=715.95 and abs(V[i])>10:
         for item in data[i]:
             f.write('%.11E  '%item, )
         f.write('%.11E  %.11E  %.11E\n'%(mu[i],eta[i],phi[i]))

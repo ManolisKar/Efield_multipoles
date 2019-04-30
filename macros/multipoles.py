@@ -60,7 +60,7 @@ def residual(pars, coordinates, V, err_V, n_order, m_order):
 # Open OPERA map file and read in data
 # (this file has been parsed to only include measurements within a 9.5 cm diameter circle)
 #data = np.loadtxt('short_quad_ideal.dat', comments='!')
-data = np.loadtxt('short_test.dat', comments='!')
+data = np.loadtxt('short_quad_ideal_Vgt10.dat', comments='!')
 x=data[:,0]
 y=data[:,1]
 z=data[:,2]

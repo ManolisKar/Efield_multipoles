@@ -59,17 +59,17 @@ data = np.loadtxt(fstem+ '.dat', comments='!')
 x=data[:,0]
 y=data[:,1]
 z=data[:,2]
-r=np.array(data[:,3])
+r=data[:,3]
 # phi=data[:,4] -- unnecessary because not in [0,2pi] - get from y/x instead
 # phi = np.pi + np.arctan2(y,x) # this phi will be in [0,2pi]
 # this has been created in the file already, just read
 
-V=np.array(data[:,8])
+V=data[:,8]
 err_V=1 ### To do: realistic error estimate for each V value ###
 
-mu=np.array(data[:9])
-eta=np.array(data[:10])
-phi=np.array(data[:11])
+mu=data[:9]
+eta=data[:10]
+phi=data[:11]
 ## Read the toroidal coordinates in multi-D array
 coordinates = data[:,9:12]
 
@@ -133,17 +133,16 @@ V_color_plot.scatter(
 V_color_plot.figure.show()
 '''
 
-# Plot residuals vs all coordinates
-resid_mu_plot = plt.figure(figsize=(18,7)).add_subplot(1,1,1,
-    title='Residuals vs mu',xlabel='mu'
+# Plot residuals in color code vs r,z
+fig=plt.figure('res_color', figsize=(18, 7))
+plt.scatter(
+    r,z,c=residuals, cmap='afmhot'
 )
-resid_mu_plot.plot(
-    mu, residuals, 
-    marker='', color='black', 
-    linestyle='-', linewidth=0.75, 
-    label='V Residuals'
-)
-resid_mu_plot.figure.savefig('res_vs_mu.png')
-resid_mu_plot.figure.show()
+plt.xlabel('r [cm]')
+plt.ylabel('z [cm]')
+plt.colorbar()
+plt.show()
+fig.savefig('res_color_vs_r_th.png')
+
 
 
