@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 #
 # Open OPERA map file and read in data
@@ -42,13 +43,15 @@ for i in range(len(eta)):
         phi[i] = 2*np.pi + phi[i]
     
 # Open output file
-f= open("short_quad_ideal_Vgt12000.dat","w+")
+f= open("short_quad_ideal_outerR.dat","w+")
 
+accepted_entries=0
 for i in range(len(r)):
-    if r[i]>=706.45 and r[i]<=715.95 and abs(V[i])>12000:
+    if math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))<4.7 and math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))>4.6:
         for item in data[i]:
             f.write('%.11E  '%item, )
         f.write('%.11E  %.11E  %.11E\n'%(mu[i],eta[i],phi[i]))
+        accepted_entries += 1
     
 f.close()
- 
+print 'Total accepted entries :: ', accepted_entries
