@@ -16,7 +16,6 @@ and obeying a specific format: Comment lines beginning with '!', '[]' characters
 
 def model_potential(pars, coordinates, n_order, m_order):
     # model function for the potential at a point with coordinates [mu,eta,phi]
-    # Unlike for the multipoles.py script, here pars is a 2D array
     mu = coordinates[:,0]
     eta = coordinates[:,1]
     phi = coordinates[:,2]
@@ -32,11 +31,11 @@ def model_potential(pars, coordinates, n_order, m_order):
         for n in range(n_order+1):
             for m in range(n+1): # for now m goes up to n, or up to m_order
                 if m>m_order: continue
-                nm_id = sum(range(n+1)) + m #n-m position in the parameter array
-                A_nm=pars[nm_id][0]
-                B_nm=pars[nm_id][1]
-                eta_nm=pars[nm_id][2]
-                phi_nm=pars[nm_id][3]
+                nm_id = 4*(sum(range(n+1)) + m) #n-m position in the parameter array
+                A_nm=pars[nm_id+0]
+                B_nm=pars[nm_id+1]
+                eta_nm=pars[nm_id+2]
+                phi_nm=pars[nm_id+3]
                 model_V[i] += (A_nm*legendre_Q_toroidal(m,n,mu_i) + B_nm*legendre_P_toroidal(m,n,mu_i)) * np.cos(n*(eta_i-eta_nm)) * np.cos(m*(phi_i-phi_nm))
         model_V[i] *= f_mu_eta[i]    
     
@@ -78,10 +77,10 @@ coordinates = data[:,9:12]
 a=5.756 
 
 # Now read in the result for the fit parameters
-pars = np.loadtxt(fstem + '.out', comments='!')
-nm_order,temp=pars.shape
+pars = np.loadtxt('pars_' + fstem + '.dat', comments='!')
+nm_order=len(pars)
 for i in range(20):
-    if sum(range(i+1))+i+2>nm_order:
+    if 4*(sum(range(i+1))+i+1)==nm_order:
         n_order=i
         m_order=i
         break
@@ -104,7 +103,7 @@ V_plot = plt.figure(figsize=(18,7)).add_subplot(1,1,1,
 V_plot.plot(
     mu, V, 
     marker='', color='black', 
-    linestyle='-', linewidth=0.75, 
+    #linestyle='-', linewidth=0.75, 
     label='V'
 )
 V_plot.figure.savefig('V_vs_mu.png')
@@ -113,7 +112,7 @@ V_plot.figure.show()
 # Plot V in color code vs r,z
 fig=plt.figure('V_color', figsize=(18, 7))
 plt.scatter(
-    r,z,c=V, cmap='afmhot'
+    r,z,c=V, cmap='coolwarm'
 )
 plt.xlabel('r [cm]')
 plt.ylabel('z [cm]')
@@ -136,7 +135,7 @@ V_color_plot.figure.show()
 # Plot residuals in color code vs r,z
 fig=plt.figure('res_color', figsize=(18, 7))
 plt.scatter(
-    r,z,c=residuals, cmap='afmhot'
+    r,z,c=residuals, cmap='coolwarm'
 )
 plt.xlabel('r [cm]')
 plt.ylabel('z [cm]')

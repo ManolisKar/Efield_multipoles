@@ -61,6 +61,8 @@ def residual(pars, coordinates, V, err_V, n_order, m_order):
     print 'Iteration #', iter_count
     print 'pars ::\n', pars
     print 'normalized residual sum = ', sum_residuals
+    ndf = len(model_V) - len(pars)
+    print 'reduced chi2 = ', sum_residuals/ndf
     sys.stdout.flush()
 
     return norm_residuals
@@ -71,7 +73,7 @@ def residual(pars, coordinates, V, err_V, n_order, m_order):
 # (this file has been parsed to only include measurements within a 9.5 cm diameter circle)
 #data = np.loadtxt('short_quad_ideal.dat', comments='!')
 #data = np.loadtxt('short_quad_ideal_Vgt10.dat', comments='!')
-if len(sys.argv)>1:# passed 1st arg for file stem
+if len(sys.argv)>1:# 1st arg given is for file stem
     fstem=str(sys.argv[1])
 else:
     fstem='test3000'
@@ -99,8 +101,15 @@ a=5.756
 
 err_V=1 ### To do: realistic error estimate for each V value ###
 
-n_order=10
-m_order=10
+if len(sys.argv)>2:# 2nd arg given is for max n_order
+    n_order=int(sys.argv[2])
+else:
+    n_order=5
+if len(sys.argv)>3:# 3rd arg given is for max m_order
+    m_order=int(sys.argv[3])
+else:
+    m_order=n_order
+
 pars = np.zeros(4*( sum(range(n_order+1)) + m_order + 1 ))
 # I believe pars is required to be 1-D array of parameters to be optimized.
 # pars[0+4*n*m] are the A_nm, pars[1+4*n*m] are the B_nm, 
@@ -144,7 +153,7 @@ result_pars, flag = scipy.optimize.leastsq(residual, pars, args=(coordinates, V,
 print ('Result flag = %d\n Fit parameters ::\n'%flag), result_pars
 
 # Output parameters to file
-pars_file = open('pars_'+fstem+'.dat')
+pars_file = open('pars_'+fstem+('_%02d.dat' % n_order))
 for i in range(len(pars)):
     pars_file.write(pars[i])
 

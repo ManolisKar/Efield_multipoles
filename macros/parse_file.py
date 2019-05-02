@@ -42,10 +42,10 @@ for i in range(len(eta)):
         phi[i] = 2*np.pi + phi[i]
     
 # Open output file
-f= open("short_quad_ideal_Vgt10.dat","w+")
+f= open("short_quad_ideal_Vgt12000.dat","w+")
 
 for i in range(len(r)):
-    if r[i]>=706.45 and r[i]<=715.95 and abs(V[i])>10:
+    if r[i]>=706.45 and r[i]<=715.95 and abs(V[i])>12000:
         for item in data[i]:
             f.write('%.11E  '%item, )
         f.write('%.11E  %.11E  %.11E\n'%(mu[i],eta[i],phi[i]))
