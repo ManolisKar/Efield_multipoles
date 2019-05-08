@@ -149,11 +149,11 @@ print '\n\nInitial parameters ::\n', pars
 
 # Calculate and minimize the residuals
 residual(pars,coordinates,V,err_V,n_order,m_order)
-result_pars, flag = scipy.optimize.leastsq(residual, pars, args=(coordinates, V, err_V, n_order, m_order) )#,ftol=1e-13,xtol=1e-10)
+result_pars, flag = scipy.optimize.leastsq(residual, pars, args=(coordinates, V, err_V, n_order, m_order),ftol=1e-15,xtol=1e-12)
 print ('Result flag = %d\n Fit parameters ::\n'%flag), result_pars
 
 # Output parameters to file
-pars_file = open('pars_'+fstem+('_%02d.dat' % n_order))
+pars_file = open('pars_'+fstem+('.dat' % n_order), 'w+')
 for i in range(len(pars)):
     pars_file.write(pars[i])
 
