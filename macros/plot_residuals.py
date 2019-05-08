@@ -96,18 +96,6 @@ phi=np.array(data[:,11])
 r=np.array(data[:,3])
 V=np.array(V)
 
-# Plot V vs coordinates
-V_plot = plt.figure(figsize=(18,7)).add_subplot(1,1,1,
-    title='V vs mu',xlabel='mu'
-)
-V_plot.plot(
-    mu, V, 
-    marker='', color='black', 
-    #linestyle='-', linewidth=0.75, 
-    label='V'
-)
-V_plot.figure.savefig('V_vs_mu.png')
-V_plot.figure.show()
 
 # Plot V in color code vs r,z
 fig=plt.figure('V_color', figsize=(18, 7))
@@ -120,17 +108,18 @@ plt.colorbar()
 plt.show()
 fig.savefig('V_color_vs_r_th.png')
 
-'''
-V_color_plot = plt.figure(figsize=(18,7)).add_subplot(1,1,1,
-    title='V vs r,z',xlabel='r',ylabel='z'
+
+# Plot function with fit pars in color code vs r,z
+fig=plt.figure('fit_color', figsize=(18, 7))
+plt.scatter(
+    r,z,c=model_V, cmap='coolwarm'
 )
-V_color_plot.scatter(
-    r,z,c=V, cmap='afmhot'
-)
-#V_color_plot.figure.savefig('V_color_vs_r_th.png')
-#plt.colorbar(V_color_plot)
-V_color_plot.figure.show()
-'''
+plt.xlabel('r [cm]')
+plt.ylabel('z [cm]')
+plt.colorbar()
+plt.show()
+fig.savefig('fit_color_vs_r_th.png')
+
 
 # Plot residuals in color code vs r,z
 fig=plt.figure('res_color', figsize=(18, 7))

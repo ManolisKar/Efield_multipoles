@@ -43,11 +43,11 @@ for i in range(len(eta)):
         phi[i] = 2*np.pi + phi[i]
     
 # Open output file
-f= open("short_quad_ideal_outerR.dat","w+")
+f= open("short_quad_ideal_outererR.dat","w+")
 
 accepted_entries=0
 for i in range(len(r)):
-    if math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))<4.7 and math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))>4.6:
+    if math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))<4.7 and math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))>4.68:
         for item in data[i]:
             f.write('%.11E  '%item, )
         f.write('%.11E  %.11E  %.11E\n'%(mu[i],eta[i],phi[i]))
