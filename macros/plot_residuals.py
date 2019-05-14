@@ -66,9 +66,6 @@ r=data[:,3]
 V=data[:,8]
 err_V=1 ### To do: realistic error estimate for each V value ###
 
-mu=data[:9]
-eta=data[:10]
-phi=data[:11]
 ## Read the toroidal coordinates in multi-D array
 coordinates = data[:,9:12]
 
