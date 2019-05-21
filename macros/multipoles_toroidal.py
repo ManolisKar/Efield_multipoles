@@ -107,7 +107,7 @@ else:
     n_order=5
 if len(sys.argv)>3:# 3rd arg given is for max m_order
     m_order=int(sys.argv[3])
-else:
+else: ## for now the code only really handles m_order=n_order
     m_order=n_order
 
 pars = np.zeros(4*( sum(range(n_order+1)) + m_order + 1 ))
@@ -115,7 +115,7 @@ pars = np.zeros(4*( sum(range(n_order+1)) + m_order + 1 ))
 # pars[0+4*n*m] are the A_nm, pars[1+4*n*m] are the B_nm, 
 # pars[2+4*n*m] are the eta_nm, pars[3+4*n*m] are the phi_nm.
 # Get some initial values from file, up to appropriate order:
-starting_pars = np.loadtxt('pars_'+fstem+'.dat', comments='!')
+starting_pars = np.loadtxt('pars_%s_nm%d.dat' % (fstem,n_order), comments='!')
 for n in range(n_order+1):
     for m in range(n+1): # for now m goes up to n, or up to m_order
         if m>m_order: continue
@@ -153,9 +153,9 @@ result_pars, flag = scipy.optimize.leastsq(residual, pars, args=(coordinates, V,
 print ('Result flag = %d\n Fit parameters ::\n'%flag), result_pars
 
 # Output parameters to file
-pars_file = open('pars_'+fstem+('_%d.dat' % n_order), 'w+')
-for i in range(len(pars)):
-    pars_file.write(pars[i])
+pars_file = open('pars_out_%s_%d.dat' % (fstem,n_order), 'w+')
+for i in range(len(result_pars)):
+    pars_file.write(result_pars[i])
 
 
 # Plot results
