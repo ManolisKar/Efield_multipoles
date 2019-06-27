@@ -82,15 +82,11 @@ else:
 pars = np.zeros(2*(n_order+1))
 exists = os.path.isfile('pars_'+fstem+('_%d.dat' % n_order))
 if exists:
-    pars_data = np.loadtxt('pars_'+fstem+('_%d.dat' % n_order), comments='!')    
-    print '\n\n Fit parameters ::\n', pars_data
+    pars = np.loadtxt('pars_'+fstem+('_%d.dat' % n_order), comments='!')    
+    print '\n\n Fit parameters ::\n', pars
 else:
     print '\n\n No fit result found\n'
     exit()
-
-pars=pars_data[:,0]
-low_limit=pars_data[:1]
-hi_limit=pars_data[:2]
 
 
 ## Calculate model value and residuals based on fit parameters
