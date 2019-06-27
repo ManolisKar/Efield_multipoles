@@ -153,7 +153,7 @@ result_pars, flag = scipy.optimize.leastsq(residual, pars, args=(coordinates, V,
 print ('Result flag = %d\n Fit parameters ::\n'%flag), result_pars
 
 # Output parameters to file
-pars_file = open('pars_out_%s_%d.dat' % (fstem,n_order), 'w+')
+pars_file = open('pars_out_%s_nm%d.dat' % (fstem,n_order), 'w+')
 for i in range(len(result_pars)):
     pars_file.write(result_pars[i])
 
