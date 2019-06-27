@@ -29,7 +29,7 @@ def model_potential(pars, coordinates, n_order):
         for n in range(n_order+1):
             an=pars[2*n]
             bn=pars[2*n+1]
-            model_V[i] += r_polar[i]**n *(an*np.sin(n*th_polar[i]) + bn*np.cos(n*th_polar[i]))
+            model_V[i] += np.power(r_polar[i],n) *(an*np.sin(n*th_polar[i]) + bn*np.cos(n*th_polar[i]))
     return model_V 
 
 def residual(pars, coordinates, V, err_V, n_order):
@@ -40,12 +40,13 @@ def residual(pars, coordinates, V, err_V, n_order):
     sum_residuals = sum(np.power(norm_residuals,2.))
 
     iter_count += 1
-    print 'Iteration #', iter_count
-    print 'pars ::\n', pars
-    print 'normalized residual sum = ', sum_residuals
-    ndf = len(model_V) - len(pars)
-    print 'reduced chi2 = ', sum_residuals/ndf
-    sys.stdout.flush()
+    if iter_count%10000==0:
+        print 'Iteration #', iter_count
+        print 'pars ::\n', pars
+        print 'normalized residual sum = ', sum_residuals
+        ndf = len(model_V) - len(pars)
+        print 'reduced chi2 = ', sum_residuals/ndf
+        sys.stdout.flush()
 
     return norm_residuals
 
@@ -74,8 +75,8 @@ V=data[:,3]
 
 # Construct polar coordinates with origin at center of storage region
 x = r-711.2 # in cm
-r_polar = np.array(x/np.cos(th))
-th_polar = np.array(np.pi + np.arctan2(z,x))
+th_polar = np.array(np.arctan2(z,x))
+r_polar = np.array(x/np.cos(th_polar))
 
 coordinates = np.vstack((r_polar,th_polar)).T
 print '\n\nCoordinates:\n', coordinates
@@ -93,18 +94,30 @@ pars = np.zeros(2*(n_order+1))
 # Get initial parameter values from file - if it exists
 exists = os.path.isfile('pars_'+fstem+('_%d.dat' % n_order))
 if exists:
-    pars = np.loadtxt('pars_'+fstem+('_%d.dat' % n_order), comments='!')    
+    pars_data = np.loadtxt('pars_'+fstem+('_%d.dat' % n_order), comments='!')    
+    print pars_data
+    pars=pars_data[:,0]
+    low_limit=pars_data[:,1]
+    hi_limit=pars_data[:,2]
+else:
+    low_limit=-np.inf
+    hi_limit=np.inf
 print '\n\nInitial parameters ::\n', pars
+
+par_bounds = (low_limit, hi_limit)
+print par_bounds
 
 # Calculate and minimize the residuals
 residual(pars,coordinates,V,err_V,n_order)
-fit_result = scipy.optimize.least_squares(residual, pars, args=(coordinates, V, err_V, n_order),ftol=1e-15,xtol=1e-12)
+fit_result = scipy.optimize.least_squares(residual, pars, method='trf', bounds=par_bounds,max_nfev=1e20,args=(coordinates, V, err_V, n_order),ftol=1e-15,xtol=1e-15)
 #result_pars, flag = scipy.optimize.least_squares(residual, pars, args=(coordinates, V, err_V, n_order),ftol=1e-15,xtol=1e-12)
-print ('Result status = %d\n Fit parameters ::\n'%fit_result.status), fit_result.x
+print ('Result status = %d\nCost = %f\nOptimality = %f\n Fit parameters ::\n'%(fit_result.status,fit_result.cost,fit_result.optimality)), fit_result.x
 
 # Output parameters to file
 pars_file = open('pars_'+fstem+('_%d.dat' % n_order), 'w+')
-np.savetxt(pars_file, fit_result.x)
+pars_file.write('!V           low     hi\n')
+for i in range(len(pars)):
+    pars_file.write('%f\t%f\t%f\n' % (fit_result.x[i], low_limit[i], hi_limit[i]))
 pars_file.close()
 
 if not plot_results:

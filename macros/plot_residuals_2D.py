@@ -64,8 +64,8 @@ err_V=1 ### To do: realistic error estimate for each V value ###
 
 ## Construct polar coordinates with origin at center of storage region
 x = r-711.2 # in cm
-r_polar = np.array(x/np.cos(th))
-th_polar = np.array(np.pi + np.arctan2(z,x))
+th_polar = np.array(np.arctan2(z,x))
+r_polar = np.array(x/np.cos(th_polar))
 
 coordinates = np.vstack((r_polar,th_polar)).T
 print '\n\nCoordinates:\n', coordinates
@@ -82,11 +82,15 @@ else:
 pars = np.zeros(2*(n_order+1))
 exists = os.path.isfile('pars_'+fstem+('_%d.dat' % n_order))
 if exists:
-    pars = np.loadtxt('pars_'+fstem+('_%d.dat' % n_order), comments='!')    
-    print '\n\n Fit parameters ::\n', pars
+    pars_data = np.loadtxt('pars_'+fstem+('_%d.dat' % n_order), comments='!')    
+    print '\n\n Fit parameters ::\n', pars_data
 else:
     print '\n\n No fit result found\n'
     exit()
+
+pars=pars_data[:,0]
+low_limit=pars_data[:1]
+hi_limit=pars_data[:2]
 
 
 ## Calculate model value and residuals based on fit parameters
@@ -101,7 +105,7 @@ V=np.array(V)
 # Plot V in color code vs r,z
 fig=plt.figure('V_color', figsize=(18, 7))
 plt.scatter(
-    r,z,c=V, s=20, alpha=0.2, cmap='coolwarm'
+    r,z,c=V, s=20, alpha=0.5, cmap='coolwarm'
 )
 plt.xlabel('r [cm]')
 plt.ylabel('z [cm]')
@@ -113,7 +117,7 @@ fig.savefig('V_color_vs_r_th.png')
 # Plot function with fit pars in color code vs r,z
 fig=plt.figure('fit_color', figsize=(18, 7))
 plt.scatter(
-    r,z,c=model_V, s=20, alpha=0.2,cmap='coolwarm'
+    r,z,c=model_V, s=20, alpha=0.5,cmap='coolwarm'
 )
 plt.xlabel('r [cm]')
 plt.ylabel('z [cm]')
@@ -125,7 +129,7 @@ fig.savefig('fit_color_vs_r_th.png')
 # Plot residuals in color code vs r,z
 fig=plt.figure('res_color', figsize=(18, 7))
 plt.scatter(
-    r,z,c=residuals, s=20, alpha=0.2, cmap='coolwarm'
+    r,z,c=residuals, s=20, alpha=0.5, cmap='coolwarm'
 )
 plt.xlabel('r [cm]')
 plt.ylabel('z [cm]')
