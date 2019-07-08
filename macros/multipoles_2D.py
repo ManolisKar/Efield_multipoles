@@ -92,13 +92,16 @@ else:
 # pars[2*n] are the A_n, pars[2*n+1] are the B_n.
 pars = np.zeros(2*(n_order+1))
 # Get initial parameter values from file - if it exists
-exists = os.path.isfile('pars_limits_'+fstem+('_%d.dat' % n_order))
+exists = os.path.isfile('pars_'+fstem+('_%d.dat' % n_order))
 if exists:
-    pars_data = np.loadtxt('pars_limits'+fstem+('_%d.dat' % n_order), comments='!')    
-    print pars_data
-    pars=pars_data[:,0]
-    low_limit=pars_data[:,1]
-    hi_limit=pars_data[:,2]
+    pars = np.loadtxt('pars_'+fstem+('_%d.dat' % n_order), comments='!')    
+    print pars
+exists = os.path.isfile('limits_'+fstem+('_%d.dat' % n_order))
+if exists:
+    limits_data = np.loadtxt('limits_'+fstem+('_%d.dat' % n_order), comments='!')    
+    print limits_data
+    low_limit=limits_data[:,0]
+    hi_limit=limits_data[:,1]
 else:
     low_limit=-np.inf
     hi_limit=np.inf
