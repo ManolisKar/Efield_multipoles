@@ -42,7 +42,7 @@ def residual(pars, coordinates, V, err_V, n_order):
     sum_residuals = sum(np.power(norm_residuals,2.))
 
     iter_count += 1
-    if iter_count%100==0:
+    if iter_count%10000==0:
         print 'Iteration #', iter_count
         print 'pars ::\n', pars
         print 'normalized residual sum = ', sum_residuals
@@ -96,6 +96,8 @@ else:
 # I believe pars is required to be 1-D array of parameters to be optimized.
 # pars[2*n] are the A_n, pars[2*n+1] are the B_n.
 pars = np.zeros(2*(n_order+1))
+low_limit = np.zeros(2*(n_order+1))
+hi_limit = np.zeros(2*(n_order+1))
 # Get initial parameter values from file - if it exists
 filename='pars_'+fstem+('_%d.dat' % n_order)
 exists = os.path.isfile(filename)
@@ -104,23 +106,30 @@ if exists:
     print ('Reading starting parameters from file:\n', filename)  
     if debug:
         print pars
-filename = 'limits_'+fstem+('_%d.dat' % n_order)
+filename = 'limits_multipoles.dat'
 exists = os.path.isfile(filename)
 if exists:
     limits_data = np.loadtxt(filename, comments='!')    
     print ('Reading parameter limits from file:\n', filename) 
     if debug:
         print limits_data
-    low_limit=limits_data[:,0]
-    hi_limit=limits_data[:,1]
+    for i in range(2*n_order+2):
+        low_limit[i]=limits_data[i,0]
+        hi_limit[i]=limits_data[i,1]
 else:
-    low_limit=-np.inf
-    hi_limit=np.inf
+    for i in range(2*n_order+2):
+        low_limit[i]=-np.inf
+        hi_limit[i]=np.inf
 print '\n\nInitial parameters ::\n', pars
 
 par_bounds = (low_limit, hi_limit)
 if debug:
     print ('Parameter bounds:\n', par_bounds)
+print ('Parameter bounds:\n', par_bounds)
+
+for i in range(2*n_order+2):
+    if pars[i]<low_limit[i] or pars[i]>hi_limit[i]:
+        print(' Uh oh!! Starting par value out of bounds...\n Par #%d=%.5e\tbounds [%.5e,%.5e]' % (i,pars[i],low_limit[i],hi_limit[i]))
 
 # Calculate and minimize the residuals
 residual(pars,coordinates,V,err_V,n_order)
