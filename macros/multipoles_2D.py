@@ -8,6 +8,8 @@ import os
 
 plot_results = 0
 
+debug = 0
+
 iter_count=0
 
 __doc__ = '''Fit data of potential from an OPERA map file
@@ -40,7 +42,7 @@ def residual(pars, coordinates, V, err_V, n_order):
     sum_residuals = sum(np.power(norm_residuals,2.))
 
     iter_count += 1
-    if iter_count%10000==0:
+    if iter_count%100==0:
         print 'Iteration #', iter_count
         print 'pars ::\n', pars
         print 'normalized residual sum = ', sum_residuals
@@ -65,10 +67,10 @@ else:
     fstem='test3000'
 print 'Processing file '+fstem+'.dat'
 data = np.loadtxt(fstem+'.dat', comments='!')
-r=data[:,0]
-th=data[:,1]
-z=data[:,2]
-V=data[:,3]
+r=np.array(data[:,0])
+th=np.array(data[:,1])
+z=np.array(data[:,2])
+V=np.array(data[:,3])
 # phi=data[:,4] -- unnecessary because not in [0,2pi] - get from y/x instead
 # phi = np.pi + np.arctan2(y,x) # this phi will be in [0,2pi]
 # this has been created in the file already, just read
@@ -78,8 +80,11 @@ x = r-711.2 # in cm
 th_polar = np.array(np.arctan2(z,x))
 r_polar = np.array(x/np.cos(th_polar))
 
+if debug:
+    for i in range(10):
+        print('r=%f\tz=%f\nr_p=%f\tth_p=%f\n' %(r[i],z[i],r_polar[i],th_polar[i]))
+
 coordinates = np.vstack((r_polar,th_polar)).T
-print '\n\nCoordinates:\n', coordinates
 
 err_V=1 ### To do: realistic error estimate for each V value ###
 
@@ -92,14 +97,20 @@ else:
 # pars[2*n] are the A_n, pars[2*n+1] are the B_n.
 pars = np.zeros(2*(n_order+1))
 # Get initial parameter values from file - if it exists
-exists = os.path.isfile('pars_'+fstem+('_%d.dat' % n_order))
+filename='pars_'+fstem+('_%d.dat' % n_order)
+exists = os.path.isfile(filename)
 if exists:
-    pars = np.loadtxt('pars_'+fstem+('_%d.dat' % n_order), comments='!')    
-    print pars
-exists = os.path.isfile('limits_'+fstem+('_%d.dat' % n_order))
+    pars = np.loadtxt(filename, comments='!')  
+    print ('Reading starting parameters from file:\n', filename)  
+    if debug:
+        print pars
+filename = 'limits_'+fstem+('_%d.dat' % n_order)
+exists = os.path.isfile(filename)
 if exists:
-    limits_data = np.loadtxt('limits_'+fstem+('_%d.dat' % n_order), comments='!')    
-    print limits_data
+    limits_data = np.loadtxt(filename, comments='!')    
+    print ('Reading parameter limits from file:\n', filename) 
+    if debug:
+        print limits_data
     low_limit=limits_data[:,0]
     hi_limit=limits_data[:,1]
 else:
@@ -108,19 +119,27 @@ else:
 print '\n\nInitial parameters ::\n', pars
 
 par_bounds = (low_limit, hi_limit)
-print par_bounds
+if debug:
+    print ('Parameter bounds:\n', par_bounds)
 
 # Calculate and minimize the residuals
 residual(pars,coordinates,V,err_V,n_order)
-fit_result = scipy.optimize.least_squares(residual, pars, method='trf', bounds=par_bounds,max_nfev=1e20,args=(coordinates, V, err_V, n_order),ftol=1e-15,xtol=1e-15)
+fit_result = scipy.optimize.least_squares(residual, pars, method='trf', bounds=par_bounds,max_nfev=1e20,args=(coordinates, V, err_V, n_order),ftol=1e-16,xtol=1e-20)
 #result_pars, flag = scipy.optimize.least_squares(residual, pars, args=(coordinates, V, err_V, n_order),ftol=1e-15,xtol=1e-12)
-print ('Result status = %d\nCost = %f\nOptimality = %f\n Fit parameters ::\n'%(fit_result.status,fit_result.cost,fit_result.optimality)), fit_result.x
+print ('\n\n Number of iterations:: %d / %d\n' % (iter_count, fit_result.nfev))
+print ('Result status = ', fit_result.status)
+print ('Cost = ', fit_result.cost)
+print ('Optimality = ', fit_result.optimality)
+print ('Fit parameters ::\n', fit_result.x)
+
+iter_count=-1
+residual(fit_result.x,coordinates,V,err_V,n_order)
 
 # Output parameters to file
 pars_file = open('pars_'+fstem+('_%d.dat' % n_order), 'w+')
-pars_file.write('!V           low     hi\n')
+pars_file.write('!Fitted parameters up to n=%d\n' % n_order)
 for i in range(len(pars)):
-    pars_file.write('%f\t%f\t%f\n' % (fit_result.x[i], low_limit[i], hi_limit[i]))
+    pars_file.write('%.9e\n' % fit_result.x[i])
 pars_file.close()
 
 if not plot_results:

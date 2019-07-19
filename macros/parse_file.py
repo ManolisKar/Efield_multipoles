@@ -54,4 +54,4 @@ for i in range(len(r)):
         accepted_entries += 1
     
 f.close()
-print 'Total accepted entries :: ', accepted_entries
+print('Total accepted entries :: ', accepted_entries)
