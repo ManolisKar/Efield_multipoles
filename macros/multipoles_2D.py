@@ -55,7 +55,6 @@ def residual(pars, coordinates, V, err_V, n_order):
         best_pars=pars
         found_better_solution=1
 
-    iter_count += 1
     if iter_count%10000==0:
         print '\n\nIteration #', iter_count
         if found_better_solution:
@@ -65,6 +64,7 @@ def residual(pars, coordinates, V, err_V, n_order):
             sys.stdout.flush()
             found_better_solution=0
 
+    iter_count += 1
     return norm_residuals
 
 
