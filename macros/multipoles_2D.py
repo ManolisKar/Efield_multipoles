@@ -13,6 +13,8 @@ debug = 0
 ## Global parameters
 iter_count=0
 best_chi2 = 1e10
+best_pars = np.zeros(100)
+
 
 __doc__ = '''Fit data of potential from an OPERA map file
 to a function of 2D multipoles.
@@ -40,23 +42,28 @@ def residual(pars, coordinates, V, err_V, n_order):
     global iter_count
     global best_chi2
 
+    found_better_solution=0
+    
     model_V = model_potential(pars, coordinates, n_order)
     norm_residuals = (V - model_V)/err_V
     sum_residuals = sum(np.power(norm_residuals,2.))
-
-    iter_count += 1
-    if iter_count%10000==0:
-        print 'Iteration #', iter_count
-        sys.stdout.flush()
 
     ndf = len(model_V) - len(pars)
     reduced_chi2 = sum_residuals/ndf
     if reduced_chi2<best_chi2:
         best_chi2=reduced_chi2
-        print 'New best solution::\n', pars
-        print '\nnmax   reduced-chi2    max-residual::\n'
-        print n_order, best_chi2, max(norm_residuals)
-        sys.stdout.flush()
+        best_pars=pars
+        found_better_solution=1
+
+    iter_count += 1
+    if iter_count%10000==0:
+        print '\n\nIteration #', iter_count
+        if found_better_solution:
+            print 'Best solution::\n', best_pars
+            print '\nnmax   reduced-chi2    max-residual::'
+            print n_order, best_chi2, max(norm_residuals)
+            sys.stdout.flush()
+            found_better_solution=0
 
     return norm_residuals
 
