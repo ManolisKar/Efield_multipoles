@@ -6,11 +6,13 @@ import matplotlib.pyplot as plt
 import sys
 import os
 
+## Switches
 plot_results = 0
-
 debug = 0
 
+## Global parameters
 iter_count=0
+best_chi2 = 1e10
 
 __doc__ = '''Fit data of potential from an OPERA map file
 to a function of 2D multipoles.
@@ -36,6 +38,7 @@ def model_potential(pars, coordinates, n_order):
 
 def residual(pars, coordinates, V, err_V, n_order):
     global iter_count
+    global best_chi2
 
     model_V = model_potential(pars, coordinates, n_order)
     norm_residuals = (V - model_V)/err_V
@@ -44,10 +47,15 @@ def residual(pars, coordinates, V, err_V, n_order):
     iter_count += 1
     if iter_count%10000==0:
         print 'Iteration #', iter_count
-        print 'pars ::\n', pars
-        print 'normalized residual sum = ', sum_residuals
-        ndf = len(model_V) - len(pars)
-        print 'reduced chi2 = ', sum_residuals/ndf
+        sys.stdout.flush()
+
+    ndf = len(model_V) - len(pars)
+    reduced_chi2 = sum_residuals/ndf
+    if reduced_chi2<best_chi2:
+        best_chi2=reduced_chi2
+        print 'New best solution::\n', pars
+        print '\nnmax   reduced-chi2    max-residual::\n'
+        print n_order, best_chi2, max(norm_residuals)
         sys.stdout.flush()
 
     return norm_residuals
@@ -133,7 +141,7 @@ for i in range(2*n_order+2):
 
 # Calculate and minimize the residuals
 residual(pars,coordinates,V,err_V,n_order)
-fit_result = scipy.optimize.least_squares(residual, pars, method='trf', bounds=par_bounds,max_nfev=1e20,args=(coordinates, V, err_V, n_order),ftol=1e-16,xtol=1e-20)
+fit_result = scipy.optimize.least_squares(residual, pars, method='trf', bounds=par_bounds,max_nfev=1e6,args=(coordinates, V, err_V, n_order),ftol=1e-15,xtol=1e-16)
 #result_pars, flag = scipy.optimize.least_squares(residual, pars, args=(coordinates, V, err_V, n_order),ftol=1e-15,xtol=1e-12)
 print ('\n\n Number of iterations:: %d / %d\n' % (iter_count, fit_result.nfev))
 print ('Result status = ', fit_result.status)
