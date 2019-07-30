@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 import sys
 import os
 from numba import jit
+#import time
+
+#start=time.time()
 
 ## Switches
 plot_results = 0
@@ -65,6 +68,7 @@ def residual(pars, coordinates, V, err_V, n_order):
             print 'Best solution::\n', best_pars
             print '\nnmax   reduced-chi2    max-residual::'
             print n_order, best_chi2, max(norm_residuals)
+            #print ('Time elapsed :: %.2f'% (time.time()-start))
             sys.stdout.flush()
             found_better_solution=0
 
