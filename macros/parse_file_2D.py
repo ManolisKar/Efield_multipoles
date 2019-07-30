@@ -23,7 +23,7 @@ f= open(filestem+'.dat',"w+")
 
 accepted_entries=0
 for i in range(len(r)):
-    if (abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-4.50)<0.06 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-3.50)<0.06 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-2.50)<0.06 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-1.50)<0.06 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-0.50)<0.06) and abs(th[i]-6.45)<0.015 and abs(V[i])>0.01: 
+    if (abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-4.50)<0.1 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-4.00)<0.1 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-3.50)<0.1 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-3.00)<0.1 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-2.50)<0.1 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-2.00)<0.1 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-1.50)<0.1 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-1.00)<0.1 or abs(math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))-0.50)<0.1) and abs(th[i]-6.45)<0.02 and abs(V[i])>0.0001: 
     #if math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))<4.51 and math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))>4.49: 
     #if math.sqrt(math.pow(r[i]-711.2,2)+math.pow(z[i],2))<4.8:         
     #if i%20==0:

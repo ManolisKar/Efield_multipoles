@@ -103,6 +103,7 @@ fig=plt.figure('V_color', figsize=(18, 7))
 plt.scatter(
     r,z,c=V, s=20, alpha=0.5, cmap='coolwarm'
 )
+plt.title("Voltage data")
 plt.xlabel('r [cm]')
 plt.ylabel('z [cm]')
 plt.colorbar()
@@ -115,6 +116,7 @@ fig=plt.figure('fit_color', figsize=(18, 7))
 plt.scatter(
     r,z,c=model_V, s=20, alpha=0.5,cmap='coolwarm'
 )
+plt.title("Fit result")
 plt.xlabel('r [cm]')
 plt.ylabel('z [cm]')
 plt.colorbar()
@@ -127,6 +129,7 @@ fig=plt.figure('res_color', figsize=(18, 7))
 plt.scatter(
     r,z,c=residuals, s=20, alpha=0.5, cmap='coolwarm'
 )
+plt.title("Fit residuals")
 plt.xlabel('r [cm]')
 plt.ylabel('z [cm]')
 plt.colorbar()
