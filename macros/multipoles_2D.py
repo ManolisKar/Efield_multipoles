@@ -63,11 +63,11 @@ def residual(pars, coordinates, V, err_V, n_order):
         found_better_solution=1
 
     if iter_count%10000==0:
-        print '\n\nIteration #', iter_count
+        print ('\n\nIteration #', iter_count)
         if found_better_solution:
-            print 'Best solution::\n', best_pars
-            print '\nnmax   reduced-chi2    max-residual::'
-            print n_order, best_chi2, max(norm_residuals)
+            print ('Best solution::\n', best_pars)
+            print ('\nnmax   reduced-chi2    max-residual::')
+            print (n_order, best_chi2, max(norm_residuals))
             #print ('Time elapsed :: %.2f'% (time.time()-start))
             sys.stdout.flush()
             found_better_solution=0
@@ -88,7 +88,7 @@ if len(sys.argv)>1:# 1st arg given is for file stem
     fstem=str(sys.argv[1])
 else:
     fstem='test3000'
-print 'Processing file '+fstem+'.dat'
+print ('Processing file '+fstem+'.dat')
 data = np.loadtxt(fstem+'.dat', comments='!')
 r=np.array(data[:,0])
 th=np.array(data[:,1])
@@ -128,14 +128,14 @@ if exists:
     pars = np.loadtxt(filename, comments='!')  
     print ('Reading starting parameters from file:\n', filename)  
     if debug:
-        print pars
+        print (pars)
 filename = 'limits_multipoles.dat'
 exists = os.path.isfile(filename)
 if exists:
     limits_data = np.loadtxt(filename, comments='!')    
     print ('Reading parameter limits from file:\n', filename) 
     if debug:
-        print limits_data
+        print (limits_data)
     for i in range(2*n_order+2):
         low_limit[i]=limits_data[i,0]
         hi_limit[i]=limits_data[i,1]
@@ -143,7 +143,7 @@ else:
     for i in range(2*n_order+2):
         low_limit[i]=-np.inf
         hi_limit[i]=np.inf
-print '\n\nInitial parameters ::\n', pars
+print ('\n\nInitial parameters ::\n', pars)
 
 par_bounds = (low_limit, hi_limit)
 if debug:
@@ -156,7 +156,7 @@ for i in range(2*n_order+2):
 
 # Calculate and minimize the residuals
 residual(pars,coordinates,V,err_V,n_order)
-fit_result = scipy.optimize.least_squares(residual, pars, method='trf', bounds=par_bounds,max_nfev=1e6,args=(coordinates, V, err_V, n_order),ftol=1e-15,xtol=1e-16)
+fit_result = scipy.optimize.least_squares(residual, pars, method='trf', bounds=par_bounds,max_nfev=1e12,args=(coordinates, V, err_V, n_order),ftol=1e-15,xtol=1e-16)
 #result_pars, flag = scipy.optimize.least_squares(residual, pars, args=(coordinates, V, err_V, n_order),ftol=1e-15,xtol=1e-12)
 print ('\n\n Number of iterations:: %d / %d\n' % (iter_count, fit_result.nfev))
 print ('Result status = ', fit_result.status)
