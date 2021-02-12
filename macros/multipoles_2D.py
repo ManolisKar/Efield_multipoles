@@ -11,17 +11,18 @@ from numba import jit
 #start=time.time()
 
 ## Switches
-plot_results = 0
+plot_results = 1
 debug = 0
 
 ## Global parameters
 iter_count=0
 best_chi2 = 1e10
 best_pars = np.zeros(100)
-found_better_solution=0
+#found_better_solution=0
 
 
-__doc__ = '''Fit data of potential from an OPERA map file
+__doc__ = '''
+Fit data of potential from an OPERA map file
 to a function of 2D multipoles.
 OPERA map file expected in r,z space
 
@@ -49,7 +50,7 @@ def residual(pars, coordinates, V, err_V, n_order):
     global iter_count
     global best_chi2
     global best_pars
-    global found_better_solution
+    #global found_better_solution
     
     model_V = model_potential(pars, coordinates, n_order)
     norm_residuals = (V - model_V)/err_V
@@ -60,17 +61,17 @@ def residual(pars, coordinates, V, err_V, n_order):
     if reduced_chi2<best_chi2:
         best_chi2=reduced_chi2
         best_pars=pars
-        found_better_solution=1
+        #found_better_solution=1
 
     if iter_count%10000==0:
         print ('\n\nIteration #', iter_count)
-        if found_better_solution:
-            print ('Best solution::\n', best_pars)
-            print ('\nnmax   reduced-chi2    max-residual::')
-            print (n_order, best_chi2, max(norm_residuals))
-            #print ('Time elapsed :: %.2f'% (time.time()-start))
-            sys.stdout.flush()
-            found_better_solution=0
+        #if found_better_solution:
+        print ('Best solution::\n', best_pars)
+        print ('\nnmax   reduced-chi2    max-residual::')
+        print (n_order, best_chi2, max(norm_residuals))
+        #print ('Time elapsed :: %.2f'% (time.time()-start))
+        sys.stdout.flush()
+        #found_better_solution=0
 
     iter_count += 1
     return norm_residuals
@@ -83,17 +84,20 @@ def residual(pars, coordinates, V, err_V, n_order):
 # and with origin at center of ring.
 # Need to convert to polar with origin at center of storage region.
 #
+# Convention expected:
+# Data contained in file map_<stem>.dat
+# Best fit parameters in file pars_<stem>.dat
 
 if len(sys.argv)>1:# 1st arg given is for file stem
     fstem=str(sys.argv[1])
 else:
     fstem='test3000'
-print ('Processing file '+fstem+'.dat')
-data = np.loadtxt(fstem+'.dat', comments='!')
-r=np.array(data[:,0])
-th=np.array(data[:,1])
+print ('Processing file map_'+fstem+'.dat')
+data = np.loadtxt('map_'+fstem+'.dat', comments='!')
+r=np.array(data[:,3])
+th=np.array(data[:,4])
 z=np.array(data[:,2])
-V=np.array(data[:,3])
+V=np.array(data[:,5])
 # phi=data[:,4] -- unnecessary because not in [0,2pi] - get from y/x instead
 # phi = np.pi + np.arctan2(y,x) # this phi will be in [0,2pi]
 # this has been created in the file already, just read
@@ -116,7 +120,7 @@ if len(sys.argv)>2:# 2nd arg given is for max n_order
 else:
     n_order=5
 
-# I believe pars is required to be 1-D array of parameters to be optimized.
+# pars is 1-D array of parameters to be optimized.
 # pars[2*n] are the A_n, pars[2*n+1] are the B_n.
 pars = np.zeros(2*(n_order+1))
 low_limit = np.zeros(2*(n_order+1))
@@ -143,8 +147,8 @@ else:
     for i in range(2*n_order+2):
         low_limit[i]=-np.inf
         hi_limit[i]=np.inf
-print ('\n\nInitial parameters ::\n', pars)
 
+print ('\n\nInitial parameters ::\n', pars)
 par_bounds = (low_limit, hi_limit)
 if debug:
     print ('Parameter bounds:\n', par_bounds)

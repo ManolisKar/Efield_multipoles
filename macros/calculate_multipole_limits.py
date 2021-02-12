@@ -29,7 +29,7 @@ else:
 debug = 1
 
 # Limit to contribution from each term (other than quadrupole) at r=4.5cm, in V:
-contribution_limit = 2000 
+contribution_limit = 10000 
 
 ## Calculate limits up to order 50. 
 ## The fitting script can read only up to the desired order
