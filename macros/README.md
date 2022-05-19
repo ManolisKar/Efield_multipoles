@@ -111,8 +111,9 @@ Fig. 6: Contributions from individual multipole terms at a radius of 4.5 cm from
 </p>
 
 I should note that the optimization procedure was significantly slow for each training sample. It was possible for the fit to take days before I realize that a given approach is not working. 
-Upon researching ways to speed up Python I found [Numba](https://numba.pydata.org), which is a just-in-time compiler to translate Python and NumpPy code into fast machine code. (Recently I found out that Numba is created by the same guy who created NumPy, SciPy, and Anaconda! Here's a nice long [podcast](https://lexfridman.com/travis-oliphant/) with him.)
-Numba was very easy to implement and very effective for the iterative optimization code, speeding up the fit by more than 100-fold.
+Upon researching ways to speed up Python I found [Numba](https://numba.pydata.org), which is a just-in-time compiler to translate Python and NumpPy code into fast machine code. 
+Numba was very easy to implement and very effective for the iterative optimization code, speeding up the fit by more than 100-fold. 
+(As a side note, Numba is one of the many awesome Python packages created by Travis Oliphant and collaborators, including NumPy, SciPy, and Anaconda. Here's a nice long [podcast](https://lexfridman.com/travis-oliphant/) with him.)
 
 
 
