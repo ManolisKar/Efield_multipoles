@@ -51,7 +51,7 @@ Finally the approach that worked well for me was rather original.
 We would select several subsets of the azimuthal slice, and we would allow the algorithm to iterate and improve the  parameters on that subset. Typically progress is incremental and eventually a plateau is reached where the scipy algorithm (typically "trf" - [Trust Region Reflective](https://nmayorov.wordpress.com/2015/06/19/trust-region-reflective-algorithm/)) cannot improve further. 
 At that point a separate subset of the data is selected, and the trf method begins again with the same starting parameter values on a new dataset.
 
-You may notice that this is just SGD applied by hand. 
+You may notice that this is just [SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) applied by hand. 
 At the time I thought of it as **reverse simulated annealing**. 
 [Simulated annealing](https://en.wikipedia.org/wiki/Simulated_annealing) is a meta-heuristic to approximate global optimization in a large search space, so very relevant for this application. The general idea is to randomly change the currently best-found solution, as if "going up the mountain" of gradient descent, in an attempt to escape local minima. 
 The approach I mentioned here is like the reverse approach to accomplish the same goal: rather than randomly shuffling up the mountain to escape a local minimum, instead randomly reshuffle the mountain itself, so that it is unlikely to begin again in a local minimum. 
@@ -83,7 +83,7 @@ Fig. 4: Fit residuals at the end of the "reverse simulated annealing" procedure 
 
 For comparison, in Fig. 5 I plot the residuals when we use the set of multipoles extracted under idealized assumptions, with the quadrupole plates at their design location without considering the real displacements as surveyed. 
 This set of parameters is taken from Table 5 of the [original paper](https://www.g-2.bnl.gov/publications/QUAD_NIMA_paper_030511.pdf) on the quadrupole system from the Brookhaven Muon g-2 Experiment, after scaling them for consistency (eg. the HV on the plates was different). 
-As we can see the residuals are much higher, up to 1800V, and they have a systematic pattern. We expect the plate displacements to be correlated rather than random, so specific thigher-order multipole terms arise that aren't captured by the idealized naive formulation. 
+As we can see the residuals are up to ~1900V, more than 20x higher than Fig. 4, and they have a systematic pattern. We expect the plate displacements to be correlated rather than random, so specific higher-order multipole terms arise that aren't captured by the idealized naive formulation. 
 
 
 <p align = "center">
@@ -108,4 +108,53 @@ Here instead we identify the higher order terms of significance.
 <sup>
 Fig. 6: Contributions from individual multipole terms at a radius of 4.5 cm from the center of the storage region. 
 </sup>
+</p>
+
+I should note that the optimization procedure was significantly slow for each training sample. It was possible for the fit to take days before I realize that a given approach is not working. 
+Upon researching ways to speed up Python I found [Numba](https://numba.pydata.org), which is a just-in-time compiler to translate Python and NumpPy code into fast machine code. (Recently I found out that Numba is created by the same guy who created NumPy, SciPy, and Anaconda! Here's a nice long [podcast](https://lexfridman.com/travis-oliphant/) with him.)
+Numba was very easy to implement and very effective for the iterative optimization code, speeding up the fit by more than 100-fold.
+
+
+
+## Toroidal coordinates
+
+If we can express the potential in 3 dimensions then we can capture effects from the curved plate geometry and from the fringe fields at the edge of the plates, both of which were ignored in the 2-D approximation. 
+And in fact it is possible to express the potential in 3-dimensional toroidal coordinates that are appropriate for the Muon g-2 storage ring. 
+However by increasing the amount of data and volume, and the complexity of the underlying effects and the fit function, the problem becomes very difficult to solve. So I proceeded to make the 2-dimensional approximation, which was already a significant advancement, and never came back to solve in 3 dimensions. 
+
+For posterity, you can find below some of my slides on how to set up the fit in toroidal coordinates. I used hypergeometric representations of toroidal harmonics, which are Legendre/Ferrers functions of half-order. 
+Please note that this is from a few years ago, and this fit was never successfully completed to confirm the validity of the approach, so please take it with a grain of salt. 
+
+Some sources to cite, from where I also grabbed some visualizations in the slides:
+* [S. Kuyucak et al. (1998): Analytical Solutions of Poisson's Equation for Realistic Geometrical Shapes of Membrane Ion Channels](https://doi.org/10.1016/S0006-3495(98)77763-X)
+* [P. Lucht (2016): The charged bowl in toroidal coordinates](https://www.researchgate.net/publication/289504767_The_Charged_Bowl_in_Toroidal_Coordinates)
+* https://dlmf.nist.gov/14.4
+
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide1.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide2.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide3.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide4.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide5.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide6.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide7.png?raw=true" alt="Trulli" style="width:80%">
 </p>
