@@ -20,7 +20,7 @@ Fig. 1: Finite Element mesh of the quadrupole plates in their surveyed location,
 
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/V_E.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/V_E.png?raw=true" alt="" style="width:80%">
 </p>
 <p align = "center">
 <sup>
@@ -36,7 +36,7 @@ We need to model the electric potential to use it in simulations, as it is not p
 A full analysis would attempt to model the potential everywhere in the volume with a 3-dimensional function, capturing effects from the curved geometry and fringe fields at the edge of plates. I discuss this [later](#toroidal-coordinates).
 But a reasonable first approximation is to model the fields on a 2-dimensional azimuthal slice near the center of the plates. For that case the potential can be decomposed into multipoles:
 <p align = "left">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/formula.png?raw=true" alt="Trulli" style="width:30%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/formula.png?raw=true" alt="" style="width:30%">
 </p>
 
 We would like to maintain terms up to order n=14-20 to incorporate higher-order effects. But that means that we need to fit 30-40 parameters on a complicated data set. 
@@ -59,7 +59,7 @@ The approach I mentioned here is like the reverse approach to accomplish the sam
 
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/subsets.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/subsets.png?raw=true" alt="" style="width:80%">
 </p>
 <p align = "center">
 <sup>
@@ -73,7 +73,7 @@ This is actually extracted from my very talented TARGET 2021 high school student
 
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/residuals.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/residuals.png?raw=true" alt="" style="width:80%">
 </p>
 <p align = "center">
 <sup>
@@ -87,7 +87,7 @@ As we can see the residuals are up to ~1900V, more than 20x higher than Fig. 4, 
 
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/residuals_from_ideal.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/residuals_from_ideal.png?raw=true" alt="" style="width:80%">
 </p>
 <p align = "center">
 <sup>
@@ -102,7 +102,7 @@ Here instead we identify the higher order terms of significance.
 
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/mult_terms.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/mult_terms.png?raw=true" alt="" style="width:80%">
 </p>
 <p align = "center">
 <sup>
@@ -132,29 +132,29 @@ Some sources to cite, from where I also grabbed some visualizations in the slide
 
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide1.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide1.png?raw=true" alt="" style="width:80%">
 </p>
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide2.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide2.png?raw=true" alt="" style="width:80%">
 </p>
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide3.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide3.png?raw=true" alt="" style="width:80%">
 </p>
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide4.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide4.png?raw=true" alt="" style="width:80%">
 </p>
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide5.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide5.png?raw=true" alt="" style="width:80%">
 </p>
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide6.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide6.png?raw=true" alt="" style="width:80%">
 </p>
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide7.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/tor_slide7.png?raw=true" alt="" style="width:80%">
 </p>
