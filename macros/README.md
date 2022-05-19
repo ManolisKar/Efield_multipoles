@@ -1,6 +1,6 @@
 # Multipole expansion of quadrupole field
 
-## Introduction
+## Finite Element analysis
 
 The quadrupole plates generate the E-field experienced by the muons in the Muon g-2 experiment. 
 They consist of 4 sets (Q1-Q4), each with a short and long segment, for a total of 8 quadrupole sections (Q1S, Q1L, Q2S, ...). There are 4 plates in each section: top, bottom, inner, outer.
@@ -17,3 +17,95 @@ Fig. 1: Finite Element mesh of the quadrupole plates in their surveyed location,
 </sup>
 </p>
 
+
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/V_E.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+<p align = "center">
+<sup>
+Fig. 2: Quadrupole plates potential (left) and vector E field (right) on an azimuthal slice, as modeled through Finite Element analysis.
+</sup>
+</p>
+
+
+
+## Multipole decomposition
+
+We need to model the electric potential to use it in simulations, as it is not practical to look up a massive 3D matrix to find its value at every point in space.
+A full analysis would attempt to model the potential everywhere in the volume with a 3-dimensional function, capturing effects from the curved geometry and fringe fields at the edge of plates. I discuss this [later](#toroidal-coordinates).
+But a reasonable first approximation is to model the fields on a 2-dimensional azimuthal slice near the center of the plates. For that case the potential can be decomposed into multipoles:
+<p align = "left">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/formula.png?raw=true" alt="Trulli" style="width:30%">
+</p>
+
+We would like to maintain terms up to order n=14-20 to incorporate higher-order effects. But that means that we need to fit 30-40 parameters on a complicated data set. 
+The fit is performed using *scipy.optimize.least_squares*.
+
+We found that the fit was very difficult to converge. To begin with, the data points are very dense, and probably contain some amount of noise from the Finite Element analysis that isn't characterized very well. Attempts to fit over the entire dataset, even after we limit the problem on an azimuthal slice, were unsuccessful. It was very difficult for the algorithm to reduce the least squares loss function.
+
+A secondary approach was to select only points on a surface of large enough radius that it encompasses most of the volume of interest. Then the solution would near-satisfy the Laplace equation on that surface, as the multipole decomposition of the potential satisfies the Laplace equation, and therefore should be applicable everywhere inside that boundary as well. However we found that not to be the case, and instead a solution found on such a surface would leave large residuals on other locations in the azimuthal slice. 
+We found that to be a very common feature, that when we excluded data from the fit, the found solution would perform badly on that test data, in a way very reminiscent of overfitting issues. 
+
+Finally the approach that worked well for me was rather original. 
+We would select several subsets of the azimuthal slice, and we would allow the algorithm to iterate and improve the  parameters on that subset. Typically progress is incremental and eventually a plateau is reached where the scipy algorithm (typically "trf" - [Trust Region Reflective](https://nmayorov.wordpress.com/2015/06/19/trust-region-reflective-algorithm/)) cannot improve further. 
+At that point a separate subset of the data is selected, and the trf method begins again with the same starting parameter values on a new dataset.
+
+You may notice that this is just SGD applied by hand. 
+At the time I thought of it as **reverse simulated annealing**. 
+[Simulated annealing](https://en.wikipedia.org/wiki/Simulated_annealing) is a meta-heuristic to approximate global optimization in a large search space, so very relevant for this application. The general idea is to randomly change the currently best-found solution, as if "going up the mountain" of gradient descent, in an attempt to escape local minima. 
+The approach I mentioned here is like the reverse approach to accomplish the same goal: rather than randomly shuffling up the mountain to escape a local minimum, instead randomly reshuffle the mountain itself, so that it is unlikely to begin again in a local minimum. 
+
+
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/subsets.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+<p align = "center">
+<sup>
+Fig. 3: Example data subsets from the same azimuthal slice. 
+</sup>
+</p>
+
+
+The fit converges very well through this procedure. Fit residuals in a random subset, not the final one we optimized for, are of order O(100V) (Fig. 4), which corresponds to ~0.5% precision on the up to 20,000V potential. 
+This is actually extracted from my very talented TARGET 2021 high school students, in their [project](https://colab.research.google.com/drive/1SVou3_BtEfiJzfIiGkuiiAc6SLfOCgFb) where they did much of this analysis themselves.
+
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/residuals.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+<p align = "center">
+<sup>
+Fig. 4: Fit residuals at the end of the "reverse simulated annealing" procedure described in text. 
+</sup>
+</p>
+
+For comparison, in Fig. 5 I plot the residuals when we use the set of multipoles extracted under idealized assumptions, with the quadrupole plates at their design location without considering the real displacements as surveyed. 
+This set of parameters is taken from Table 5 of the [original paper](https://www.g-2.bnl.gov/publications/QUAD_NIMA_paper_030511.pdf) on the quadrupole system from the Brookhaven Muon g-2 Experiment, after scaling them for consistency (eg. the HV on the plates was different). 
+As we can see the residuals are much higher, up to 1800V, and they have a systematic pattern. We expect the plate displacements to be correlated rather than random, so specific thigher-order multipole terms arise that aren't captured by the idealized naive formulation. 
+
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/residuals_from_ideal.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+<p align = "center">
+<sup>
+Fig. 5: Fit residuals for the set of multipoles extracted with idealized assumptions, without considering the real displacements of quadrupole plates as surveyed. 
+</sup>
+</p>
+
+
+Finally we plot the relative significance of individual multipole terms in Fig. 6. 
+The *b2* term is the quadrupole that dominates - in an ideal 2-dimensional space (with infinitely long plates) all other terms would be zero. 
+Here instead we identify the higher order terms of significance.  
+
+
+<p align = "center">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/mult_terms.png?raw=true" alt="Trulli" style="width:80%">
+</p>
+<p align = "center">
+<sup>
+Fig. 6: Contributions from individual multipole terms at a radius of 4.5 cm from the center of the storage region. 
+</sup>
+</p>
