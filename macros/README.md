@@ -9,7 +9,8 @@ After performing the in-situ [alignment surveys](https://github.com/ManolisKar/P
 For that I performed [Finite Element](https://en.wikipedia.org/wiki/Finite_element_method) modeling using the [OPERA-3D](https://www.3ds.com/products-services/simulia/products/opera/) software -- their support team was very responsive and helpful. 
 
 <p align = "center">
-<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/FEA.png?raw=true" alt="Trulli" style="width:80%">
+<img src="https://github.com/ManolisKar/Efield_multipoles/blob/master/macros/images/FEA.png?raw=true" 
+style="width:80%">
 </p>
 <p align = "center">
 <sup>
